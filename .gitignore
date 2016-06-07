@@ -1,0 +1,39 @@
+# ignore eclipse workspace
+.metadata
+
+# ignore all target directories
+target/
+
+# ignore all build directories
+build/
+
+# ignore all settings directories
+.settings
+
+# ignore project
+.project
+
+# ignore classpath
+.classpath
+
+# ignore tmp folder
+tmp
+
+# ignore tempFiles
+RemoteSystemsTempFiles
+
+# ignore deployed 
+
+# ignore logs 
+log/
+
+# ignore generated scripts
+
+#ignore unused project
+SkillMatrix
+
+
+
+
+
+
