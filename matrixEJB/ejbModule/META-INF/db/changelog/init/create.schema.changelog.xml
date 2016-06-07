@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+<changeSet id="1_create_y_matrix_schema" author="Ioana Vicol">
+        <preConditions onFail="HALT">
+            <sqlCheck expectedResult="0">select
+                case when exists(
+                SELECT schema_name FROM information_schema.schemata WHERE schema_name = 'y_matrix')
+                then 1
+                else 0
+                end
+            </sqlCheck>
+        </preConditions>
+        <comment>Creates y_matrix schema, pg_catalog schema (if they do not already exists)</comment>
+        <sqlFile dbms="postgresql"
+                 encoding="utf8"
+                 path="matrixBd_Dump.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"/>
+             
+</changeSet>
+<changeSet id="2_create_y_matrix_schema_sequence" author="Ioana Vicol">
+        <preConditions onFail="HALT">
+            <sqlCheck expectedResult="0">select
+                case when exists(
+                SELECT 0 FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
+   					WHERE c.relname = 'hibernate_sequence' AND n.nspname = 'y_matrix'; )
+                then 1
+                else 0
+                end
+            </sqlCheck>
+        </preConditions>
+        <comment>Creates hibernate_sequence in y_matrix schema (if it does not already exists)</comment>
+         <sqlFile dbms="postgresql"
+                 encoding="utf8"
+                 path="matrixBd_seq.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"/>
+             
+</changeSet>
+</databaseChangeLog>
