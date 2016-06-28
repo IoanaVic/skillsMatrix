@@ -9,7 +9,7 @@
 
 <p:panel>
 	<h:form id="dashboardForm">
-		<p:dataTable var="matrix" value="#{dashboardView.matrixs}">
+		<p:dataTable var="topic" value="#{dashboardView.topics}">
 			<p:columnGroup type="header">
 				<p:row>
 					<p:column rowspan="2"
@@ -23,11 +23,11 @@
 					</ui:repeat>
 				</p:row>
 			</p:columnGroup>
-			<p:column filterBy="#{matrix.topic}">
-				<h:outputText value="#{matrix.topic}" />
+			<p:column filterBy="#{topic}">
+				<h:outputText value="#{topic.description}" />
 			</p:column>
 			<p:columns value="#{dashboardView.users}" var="user">
-				<h:outputText value="#{dashboardView.getGrade(user, matrix.topic)}" />
+				<h:outputText value="#{dashboardView.getGrade(user, topic)}" />
 			</p:columns>
 			<f:facet name="footer">
 				<h:outputLabel value="#{msgs['dashboard.statusDate']}" />

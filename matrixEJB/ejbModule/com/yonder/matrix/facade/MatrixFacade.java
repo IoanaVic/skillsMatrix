@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import com.yonder.matrix.model.Matrix;
+import com.yonder.matrix.model.Topic;
 import com.yonder.matrix.model.User;
 
 /**
@@ -60,6 +61,6 @@ public interface MatrixFacade {
 	 * @param topic
 	 * @return List<Matrix>
 	 */
-	List<Matrix> findMatrixsByUserAndTopic(User user, String topic);
+	List<Matrix> findMatrixsByUserAndTopic(User user, Topic topic);
 
 }

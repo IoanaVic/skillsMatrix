@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.ejb.Stateless;
 
 import com.yonder.matrix.model.Matrix;
+import com.yonder.matrix.model.Topic;
 import com.yonder.matrix.model.User;
 
 /**
@@ -28,7 +29,7 @@ public class MatrixDAOImpl extends GenericDAO<Matrix> implements MatrixDAO {
 	}
 
 	@Override
-	public List<Matrix> findMatrixsByUserAndTopic(User user, String topic) {
+	public List<Matrix> findMatrixsByUserAndTopic(User user, Topic topic) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("user", user);
 		parameters.put("topic", topic);

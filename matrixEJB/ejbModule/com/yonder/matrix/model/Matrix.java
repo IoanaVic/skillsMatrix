@@ -18,77 +18,127 @@ public class Matrix {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String area;
-	private String topic;
 	private int priority;
 	private int grade;
 	private String phase;
 	private String details;
 	@ManyToOne
 	private User user;
+	@ManyToOne
+	private Topic topic;
 
+	/**
+	 * @return the id
+	 */
 	public Integer getId() {
 		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the area
+	 */
 	public String getArea() {
 		return area;
 	}
 
+	/**
+	 * @param area the area to set
+	 */
 	public void setArea(String area) {
 		this.area = area;
 	}
 
-	public String getTopic() {
-		return topic;
-	}
-
-	public void setTopic(String topic) {
-		this.topic = topic;
-	}
-
+	/**
+	 * @return the priority
+	 */
 	public int getPriority() {
 		return priority;
 	}
 
+	/**
+	 * @param priority the priority to set
+	 */
 	public void setPriority(int priority) {
 		this.priority = priority;
 	}
 
+	/**
+	 * @return the grade
+	 */
 	public int getGrade() {
 		return grade;
 	}
 
+	/**
+	 * @param grade the grade to set
+	 */
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
 
+	/**
+	 * @return the phase
+	 */
 	public String getPhase() {
 		return phase;
 	}
 
+	/**
+	 * @param phase the phase to set
+	 */
 	public void setPhase(String phase) {
 		this.phase = phase;
 	}
 
+	/**
+	 * @return the details
+	 */
 	public String getDetails() {
 		return details;
 	}
 
+	/**
+	 * @param details the details to set
+	 */
 	public void setDetails(String details) {
 		this.details = details;
 	}
 
+	/**
+	 * @return the user
+	 */
 	public User getUser() {
 		return user;
 	}
 
+	/**
+	 * @param user the user to set
+	 */
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	/**
+	 * @return the topic
+	 */
+	public Topic getTopic() {
+		return topic;
+	}
+
+	/**
+	 * @param topic the topic to set
+	 */
+	public void setTopic(Topic topic) {
+		this.topic = topic;
+	}
+	
 
 	@Override
 	public int hashCode() {

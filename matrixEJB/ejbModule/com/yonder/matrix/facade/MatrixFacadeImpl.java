@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 
 import com.yonder.matrix.dao.MatrixDAO;
 import com.yonder.matrix.model.Matrix;
+import com.yonder.matrix.model.Topic;
 import com.yonder.matrix.model.User;
 
 /**
@@ -54,7 +55,7 @@ public class MatrixFacadeImpl implements MatrixFacade {
 		return matrixDAO.findAll();
 	}
 
-	public List<Matrix> findMatrixsByUserAndTopic(User user, String topic) {
+	public List<Matrix> findMatrixsByUserAndTopic(User user, Topic topic) {
 		return matrixDAO.findMatrixsByUserAndTopic(user, topic);
 	}
 
@@ -69,7 +70,11 @@ public class MatrixFacadeImpl implements MatrixFacade {
 			hasError = true;
 		}
 
-		if (matrix.getTopic() == null || "".equals(matrix.getTopic().trim())) {
+		if (matrix.getTopic() == null) {
+			hasError = true;
+		}
+		
+		if (matrix.getUser() == null) {
 			hasError = true;
 		}
 

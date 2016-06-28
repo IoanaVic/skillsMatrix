@@ -3,6 +3,7 @@ package com.yonder.matrix.dao;
 import java.util.List;
 
 import com.yonder.matrix.model.Matrix;
+import com.yonder.matrix.model.Topic;
 import com.yonder.matrix.model.User;
 
 /**
@@ -28,6 +29,6 @@ public interface MatrixDAO extends CRUDDAO<Matrix> {
 	 * @param topic
 	 * @return List<Matrix>
 	 */
-	List<Matrix> findMatrixsByUserAndTopic(User user, String topic);
+	List<Matrix> findMatrixsByUserAndTopic(User user, Topic topic);
 
 }
