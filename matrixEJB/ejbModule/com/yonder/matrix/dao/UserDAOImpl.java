@@ -22,10 +22,10 @@ public class UserDAOImpl extends GenericDAO<User> implements UserDAO {
 
 	@Override
 	public User getById(int id) {
-		
-		return null;
+		return super.find(id);
 
 	}
+
 	@Override
 	public User findUserByEmail(String email) {
 		Map<String, Object> parameters = new HashMap<String, Object>();

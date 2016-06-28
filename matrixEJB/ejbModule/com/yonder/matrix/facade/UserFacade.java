@@ -6,19 +6,58 @@ import javax.ejb.Local;
 
 import com.yonder.matrix.model.User;
 
+/**
+ * User Facade interface for custom CRUD operations
+ * 
+ * @author IoanaV
+ *
+ */
 @Local
 public interface UserFacade {
 
-	abstract void save(User user);
+	/**
+	 * Save a User entity into Database
+	 * 
+	 * @param user
+	 */
+	void save(User user);
 
-	abstract User update(User user);
+	/**
+	 * Update a User entity from Database
+	 * 
+	 * @param user
+	 * @return updated User entity
+	 */
+	User update(User user);
 
-	abstract void delete(User user);
+	/**
+	 * Delete a User entity from Database
+	 * 
+	 * @param user
+	 */
+	void delete(User user);
 
-	abstract User find(int entityID);
+	/**
+	 * Get a User entity by id
+	 * 
+	 * @param entityID
+	 * @return User entity
+	 */
+	User find(int entityID);
 
-	abstract List<User> findAll();
+	/**
+	 * Get all User entities
+	 * 
+	 * @return List<User>
+	 */
+	List<User> findAll();
 
+	/**
+	 * Get User entity by email
+	 * 
+	 * @param email
+	 * @return User entity
+	 */
 	User findUserByEmail(String email);
 
 }

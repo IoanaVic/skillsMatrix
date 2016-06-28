@@ -1,32 +1,41 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
-<h:head/>
-<h:form id="dashboardForm">
-	<p:dataTable var="row" value="#{dashboardView.matrixs}">
-		<p:column filterBy="#{row.area}" headerText="Area">
-			<h:outputText value="#{row.area}" />
-		</p:column>
-		<p:column filterBy="#{row.topic}" headerText="Topic">
-			<h:outputText value="#{row.topic}" />
-		</p:column>
-		<p:column filterBy="#{row.priority}" headerText="Priority">
-			<h:outputText value="#{row.priority}" />
-		</p:column>
-		<p:column filterBy="#{row.grade}" headerText="Grade">
-			<h:outputText value="#{row.grade}" />
-		</p:column>
-		<p:column filterBy="#{row.phase}" headerText="Phase">
-			<h:outputText value="#{row.phase}" />
-		</p:column>
-		<p:column filterBy="#{row.details}" headerText="Details">
-			<h:outputText value="#{row.details}" />
-		</p:column>
-	</p:dataTable>
-</h:form>
+<h:head />
+
+<p:panel>
+	<h:form id="dashboardForm">
+		<p:dataTable var="matrix" value="#{dashboardView.matrixs}">
+			<p:columnGroup type="header">
+				<p:row>
+					<p:column rowspan="2"
+						headerText="#{msgs['dashboard.matrixs.topics']}" />
+					<p:column colspan="#{dashboardView.usersCount}"
+						headerText="#{msgs['dashboard.users']}" />
+				</p:row>
+				<p:row>
+					<ui:repeat value="#{dashboardView.users}" var="row">
+						<p:column headerText="#{row.username}" />
+					</ui:repeat>
+				</p:row>
+			</p:columnGroup>
+			<p:column filterBy="#{matrix.topic}">
+				<h:outputText value="#{matrix.topic}" />
+			</p:column>
+			<p:columns value="#{dashboardView.users}" var="user">
+				<h:outputText value="#{dashboardView.getGrade(user, matrix.topic)}" />
+			</p:columns>
+			<f:facet name="footer">
+				<h:outputLabel value="#{msgs['dashboard.statusDate']}" />
+				<h:outputLabel value="#{dashboardView.status}" />
+			</f:facet>
+		</p:dataTable>
+	</h:form>
+</p:panel>
+
 
 </html>
