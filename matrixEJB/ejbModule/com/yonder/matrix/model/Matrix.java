@@ -9,10 +9,12 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "Matrix.findMatrixByUserAndTopic", query = "SELECT m FROM Matrix m WHERE m.user = :user and m.topic = :topic") })
+@NamedQueries({ @NamedQuery(name = "Matrix.findMatrixByUserAndTopic", query = "SELECT m FROM Matrix m WHERE m.user = :user and m.topic = :topic"),
+	@NamedQuery(name = "Matrix.findMatrixByTopic", query = "SELECT m FROM Matrix m WHERE m.topic = :topic")	})
 public class Matrix {
 
 	public static final String FIND_BY_USER_AND_TOPIC = "Matrix.findMatrixByUserAndTopic";
+	public static final String FIND_BY_TOPIC = "Matrix.findMatrixByTopic";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

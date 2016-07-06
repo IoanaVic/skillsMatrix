@@ -59,6 +59,10 @@ public class MatrixFacadeImpl implements MatrixFacade {
 		return matrixDAO.findMatrixsByUserAndTopic(user, topic);
 	}
 
+	public List<Matrix> findMatrixsByTopic(Topic topic) {
+		return matrixDAO.findMatrixsByTopic(topic);
+	}
+
 	private void isMatrixWithAllData(Matrix matrix) {
 		boolean hasError = false;
 
@@ -83,5 +87,4 @@ public class MatrixFacadeImpl implements MatrixFacade {
 					"The matrix is missing data. Check the area and topic, they should have value.");
 		}
 	}
-
 }

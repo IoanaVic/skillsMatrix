@@ -3,11 +3,19 @@ package com.yonder.matrix.views;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.event.CellEditEvent;
 
 import com.yonder.matrix.facade.MatrixFacade;
 import com.yonder.matrix.facade.TopicFacade;
@@ -20,13 +28,15 @@ import com.yonder.matrix.model.User;
 @ManagedBean
 public class DashboardView {
 
-	private Matrix matrix;
+	private List<Matrix> selectedMatrixs;
+	private Topic selectedTopic;
 	private List<Matrix> matrixs;
 	private List<Matrix> usersMatrixs;
 	private Date status;
 	private List<User> users;
 	private User user;
 	private List<Topic> topics;
+	private Integer grade;
 
 	@EJB
 	private MatrixFacade matrixFacade;
@@ -34,6 +44,8 @@ public class DashboardView {
 	private UserFacade userFacade;
 	@EJB
 	private TopicFacade topicFacade;
+	@ManagedProperty("#{msgs}")
+	private ResourceBundle bundle;
 
 	@PostConstruct
 	public void init() {
@@ -41,15 +53,39 @@ public class DashboardView {
 		topics = topicFacade.findAll();
 	}
 
+	public void btnUpdateAction(ActionEvent actionEvent) {
+	}
+
+	public void btnViewDetails(ActionEvent actionEvent) {
+
+	}
+
+	public void btnSaveAction(ActionEvent actionEvent) {
+
+	}
+
+	public void btnDeleteAction(ActionEvent actionEvent) {
+
+	}
+
+	public void btnCancelAction(ActionEvent actionEvent) {
+
+	}
+
+	/**
+	 * Display the grades of the users for a specific topic
+	 * 
+	 * @param user
+	 * @param topic
+	 * @return the user's grade for a topic
+	 */
 	public int getGrade(User user, Topic topic) {
 		int grade = 0;
 		usersMatrixs = matrixFacade.findMatrixsByUserAndTopic(user, topic);
 		if (usersMatrixs != null && !usersMatrixs.isEmpty()) {
 			for (Matrix userMatrix : usersMatrixs) {
-				if (userMatrix.getTopic() != null
-						&& topic != null
-						&& userMatrix.getTopic().getDescription()
-								.equalsIgnoreCase(topic.getDescription())) {
+				if (userMatrix.getTopic() != null && topic != null
+						&& userMatrix.getTopic().getId() == topic.getId()) {
 					grade = userMatrix.getGrade();
 					return grade;
 				}
@@ -59,21 +95,34 @@ public class DashboardView {
 		return grade;
 	}
 
+	/**
+	 * Update the Matrix entity for each modified cell
+	 * 
+	 * @param event
+	 */
+	public void onCellEdit(CellEditEvent event) {
+		Matrix matrix = (Matrix) ((DataTable) event.getComponent())
+				.getRowData();
+		if (matrix != null) {
+			matrixFacade.update(matrix);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					bundle.getString("dashboard.succesfulInsert"), null);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+
+	}
+
+	/**
+	 * Get the number of users to render dynamic columns for each user
+	 * 
+	 * @return nr of users
+	 */
 	public int getUsersCount() {
 		if (users != null) {
 			return users.size();
 		} else {
 			return 0;
 		}
-	}
-
-	public String getTopicForMatrix(Matrix matrix) {
-		String topic = null;
-		if (matrix != null) {
-			topic = topicFacade.find(matrix.getTopic().getId())
-					.getDescription();
-		}
-		return topic;
 	}
 
 	/**
@@ -83,21 +132,6 @@ public class DashboardView {
 	public List<Matrix> getMatrixs() {
 		return matrixs;
 
-	}
-
-	/**
-	 * @return the matrix
-	 */
-	public Matrix getMatrix() {
-		return matrix;
-	}
-
-	/**
-	 * @param matrix
-	 *            the matrix to set
-	 */
-	public void setMatrix(Matrix matrix) {
-		this.matrix = matrix;
 	}
 
 	/**
@@ -183,6 +217,69 @@ public class DashboardView {
 	 */
 	public void setTopics(List<Topic> topics) {
 		this.topics = topics;
+	}
+
+	/**
+	 * @return the selectedTopic
+	 */
+	public Topic getSelectedTopic() {
+		return selectedTopic;
+	}
+
+	/**
+	 * @param selectedTopic
+	 *            the selectedTopic to set
+	 */
+	public void setSelectedTopic(Topic selectedTopic) {
+		this.selectedTopic = selectedTopic;
+	}
+
+	/**
+	 * @return the grade
+	 */
+	public Integer getGrade() {
+		return grade;
+	}
+
+	/**
+	 * @param grade
+	 *            the grade to set
+	 */
+	public void setGrade(Integer grade) {
+		this.grade = grade;
+	}
+
+	/**
+	 * @return the selectedMatrixs
+	 */
+	public List<Matrix> getSelectedMatrixs() {
+		if (selectedTopic != null && selectedMatrixs == null) {
+			selectedMatrixs = matrixFacade.findMatrixsByTopic(selectedTopic);
+		}
+		return selectedMatrixs;
+	}
+
+	/**
+	 * @param selectedMatrixs
+	 *            the selectedMatrixs to set
+	 */
+	public void setSelectedMatrixs(List<Matrix> selectedMatrixs) {
+		this.selectedMatrixs = selectedMatrixs;
+	}
+
+	/**
+	 * @return the bundle
+	 */
+	public ResourceBundle getBundle() {
+		return bundle;
+	}
+
+	/**
+	 * @param bundle
+	 *            the bundle to set
+	 */
+	public void setBundle(ResourceBundle bundle) {
+		this.bundle = bundle;
 	}
 
 }

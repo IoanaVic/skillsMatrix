@@ -36,4 +36,11 @@ public class MatrixDAOImpl extends GenericDAO<Matrix> implements MatrixDAO {
 		return super.findByEntity(Matrix.FIND_BY_USER_AND_TOPIC, parameters);
 	}
 
+	@Override
+	public List<Matrix> findMatrixsByTopic(Topic topic) {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("topic", topic);
+		return super.findByEntity(Matrix.FIND_BY_TOPIC, parameters);
+	}
+
 }

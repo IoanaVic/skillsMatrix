@@ -30,5 +30,12 @@ public interface MatrixDAO extends CRUDDAO<Matrix> {
 	 * @return List<Matrix>
 	 */
 	List<Matrix> findMatrixsByUserAndTopic(User user, Topic topic);
+	
+	/**
+	 *  Get a list of Matrix by topic
+	 * @param topic
+	 * @return List<Matrix>
+	 */
+	List<Matrix> findMatrixsByTopic(Topic topic);
 
 }

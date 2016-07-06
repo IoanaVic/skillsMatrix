@@ -13,6 +13,9 @@ build/
 # ignore project
 .project
 
+# ignore tern-project
+.tern-project
+
 # ignore classpath
 .classpath
 
