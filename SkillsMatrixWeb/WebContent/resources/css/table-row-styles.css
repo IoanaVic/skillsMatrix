@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+.ui-widget-content .red{
+   background-color:#ff4848;
+   background-image:none;
+}
+
+.ui-widget-content .green{
+   background-color:#b9ffb9;
+   background-image:none;
+}
+.ui-widget-content .yellow{
+   background-color:#ffff9f;
+   background-image:none;
+}
+
+.ui-widget-content .ui-state-highlight .red{
+   background-color:#ff7979;
+   background-image:none;
+}

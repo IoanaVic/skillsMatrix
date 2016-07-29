@@ -4,8 +4,12 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
+	
 
-<h:head />
+<h:head>
+<h:outputStylesheet name ="table-row-styles.css" library="css"/>
+</h:head>
+<h:body>
 
 <ui:include src="/WEB-INF/includes/TabMenu.xhtml" />
 
@@ -14,11 +18,12 @@
 		<p:growl id="growl" life="2000" />
 		<p:dataTable id="dashboardTable" var="topic"
 			value="#{dashboardView.topics}" selectionMode="single"
-			selection="#{dashboardView.selectedTopic}" rowKey="#{topic.id}">
+			selection="#{dashboardView.selectedTopic}" rowKey="#{topic.id}"
+			rowStyleClass="#{dashboardView.color}">
 			<p:columnGroup type="header">
 				<p:row>
 					<p:column rowspan="2"
-						headerText="#{msgs['dashboard.matrixs.topics']}" />
+						headerText="#{msgs['dashboard.matrices.topics']}" />
 					<p:column colspan="#{dashboardView.usersCount}"
 						headerText="#{msgs['dashboard.users']}" />
 				</p:row>
@@ -32,14 +37,16 @@
 			<p:column filterBy="#{topic}">
 				<h:outputText value="#{topic.description}" />
 			</p:column>
-			<p:columns value="#{dashboardView.users}" var="user">
-				<h:outputText value="#{dashboardView.getGrade(user, topic)}" />
-			</p:columns>
-			<f:facet name="footer">
+				<p:columns value="#{dashboardView.users}" var="user">
+					<h:outputText
+						value="#{dashboardView.getGrade(user, topic) == null ? 'NA' : dashboardView.getGrade(user, topic)}" />
+				</p:columns>
+				<f:facet name="footer">
 				<p:commandButton process="dashboardTable"
 					update=":dashboardForm:detailsDialog :dashboardForm:matrixDetail"
 					icon="ui-icon-search" value="#{msgs['btn.search']}"
-					oncomplete="PF('matrixDialog').show()"/>
+					actionListener="#{dashboardView.resetSelectedMatrices()}"
+					oncomplete="PF('matrixDialog').show()" />
 			</f:facet>
 		</p:dataTable>
 
@@ -48,37 +55,14 @@
 			widgetVar="matrixDialog" modal="true" showEffect="fade"
 			hideEffect="fade" resizable="false">
 			<p:outputPanel id="matrixDetail" style="text-align:center;">
-				<p:toolbar rendered="#{not empty dashboardView.selectedMatrixs}">
-					<f:facet name="left">
-						<p:commandButton
-							actionListener="#{dashboardView.btnViewDetails()}" update="growl"
-							process="dashboardTable" icon="ui-icon-search"
-							title="#{msgs['btn.search']}" />
-						<p:commandButton
-							actionListener="#{dashboardView.btnUpdateAction()}"
-							update="growl" process="dashboardTable"
-							icon="#{msgs['btn.icon.edit']}" title="#{msgs['btn.edit']}" />
-						<p:commandButton actionListener="#{dashboardView.btnSaveAction()}"
-							update="growl" process="dashboardTable" icon="ui-icon-disk"
-							title="#{msgs['btn.save']}" />
-						<p:commandButton
-							actionListener="#{dashboardView.btnDeleteAction()}"
-							update="growl" process="dashboardTable"
-							icon="#{msgs['btn.icon.delete']}" title="#{msgs['btn.delete']}" />
-						<p:commandButton
-							actionListener="#{dashboardView.btnCancelAction()}"
-							update="growl" process="dashboardTable"
-							icon="#{msgs['btn.icon.cancel']}" title="#{msgs['btn.cancel']}" style="float:left" />
-					</f:facet>
-				</p:toolbar>
 				<p:dataTable id="detailsTable"
-					rendered="#{not empty dashboardView.selectedMatrixs}"
-					value="#{dashboardView.selectedMatrixs}" var="matrix"
+					rendered="#{not empty dashboardView.selectedMatrices}"
+					value="#{dashboardView.selectedMatrices}" var="matrix"
 					editable="true" editMode="cell" widgetVar="cellMatrix">
 					<p:column>
 						<h:outputText value="#{matrix.user.username}" />
 					</p:column>
-					<p:column headerText="#{msgs['dashboard.matrixs.grade']}">
+					<p:column headerText="#{msgs['dashboard.matrices.grade']}">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{matrix.grade}" />
@@ -88,21 +72,24 @@
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
-					<p:column headerText="#{msgs['dashboard.matrixs.priority']}">
-						<f:facet name="output">
-							<h:outputText value="#{matrix.priority}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{matrix.priority}" style="width:96%" />
-						</f:facet>
+						<p:column headerText="#{msgs['dashboard.matrices.priority']}">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{matrix.topic.priority}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{matrix.topic.priority}" style="width:96%" onchange="PF('matrixDialog').update()" />
+									
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="#{msgs['dashboard.matrices.area']}">
+						<h:outputText value="#{matrix.user.area}" />
 					</p:column>
-					<p:column headerText="#{msgs['dashboard.matrixs.area']}">
-						<h:outputText value="#{matrix.area}" />
-					</p:column>
-					<p:column headerText="#{msgs['dashboard.matrixs.phase']}">
+					<p:column headerText="#{msgs['dashboard.matrices.phase']}">
 						<h:outputText value="#{matrix.phase}" />
 					</p:column>
-					<p:column headerText="#{msgs['dashboard.matrixs.details']}">
+					<p:column headerText="#{msgs['dashboard.matrices.details']}">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{matrix.details}" />
@@ -113,12 +100,11 @@
 						</p:cellEditor>
 					</p:column>
 					<p:ajax event="cellEdit" listener="#{dashboardView.onCellEdit()}"
-						update=":dashboardForm:growl :dashboardForm:detailsTable" />
+						update=":dashboardForm:growl :dashboardForm:detailsTable :dashboardForm:dashboardTable" />
 				</p:dataTable>
 			</p:outputPanel>
 		</p:dialog>
 	</h:form>
 </p:panel>
-
-
+</h:body>
 </html>

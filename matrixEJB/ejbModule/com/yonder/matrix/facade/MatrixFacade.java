@@ -61,13 +61,13 @@ public interface MatrixFacade {
 	 * @param topic
 	 * @return List<Matrix>
 	 */
-	List<Matrix> findMatrixsByUserAndTopic(User user, Topic topic);
+	List<Matrix> findMatricesByUserAndTopic(User user, Topic topic);
 	
 	/**
 	 *  Get a list of Matrix by topic
 	 * @param topic
 	 * @return List<Matrix>
 	 */
-	List<Matrix> findMatrixsByTopic(Topic topic);
+	List<Matrix> findMatricesByTopic(Topic topic);
 
 }

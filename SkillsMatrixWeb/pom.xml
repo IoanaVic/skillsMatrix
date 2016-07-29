@@ -64,7 +64,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
-			<artifactId>smoothness</artifactId>
+			<artifactId>flick</artifactId>
 			<version>${primefaces-theme.version}</version>
 		</dependency>
 	</dependencies>

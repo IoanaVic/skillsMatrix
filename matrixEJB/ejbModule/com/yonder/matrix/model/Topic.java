@@ -12,6 +12,7 @@ public class Topic {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String description;
+	private Integer priority;
 	/**
 	 * @return the id
 	 */
@@ -39,6 +40,18 @@ public class Topic {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	/**
+	 * @return the priority
+	 */
+	public Integer getPriority() {
+		return priority;
+	}
+	/**
+	 * @param priority the priority to set
+	 */
+	public void setPriority(Integer priority) {
+		this.priority = priority;
 	}
 	
 	

@@ -55,22 +55,18 @@ public class MatrixFacadeImpl implements MatrixFacade {
 		return matrixDAO.findAll();
 	}
 
-	public List<Matrix> findMatrixsByUserAndTopic(User user, Topic topic) {
-		return matrixDAO.findMatrixsByUserAndTopic(user, topic);
+	public List<Matrix> findMatricesByUserAndTopic(User user, Topic topic) {
+		return matrixDAO.findMatricesByUserAndTopic(user, topic);
 	}
 
-	public List<Matrix> findMatrixsByTopic(Topic topic) {
-		return matrixDAO.findMatrixsByTopic(topic);
+	public List<Matrix> findMatricesByTopic(Topic topic) {
+		return matrixDAO.findMatricesByTopic(topic);
 	}
 
 	private void isMatrixWithAllData(Matrix matrix) {
 		boolean hasError = false;
 
 		if (matrix == null) {
-			hasError = true;
-		}
-
-		if (matrix.getArea() == null || "".equals(matrix.getArea().trim())) {
 			hasError = true;
 		}
 

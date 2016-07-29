@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.Max;
 
 @Entity
 @NamedQueries({ @NamedQuery(name = "Matrix.findMatrixByUserAndTopic", query = "SELECT m FROM Matrix m WHERE m.user = :user and m.topic = :topic"),
@@ -19,9 +20,8 @@ public class Matrix {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	private String area;
-	private int priority;
-	private int grade;
+	@Max(4)
+	private Integer grade;
 	private String phase;
 	private String details;
 	@ManyToOne
@@ -44,44 +44,16 @@ public class Matrix {
 	}
 
 	/**
-	 * @return the area
-	 */
-	public String getArea() {
-		return area;
-	}
-
-	/**
-	 * @param area the area to set
-	 */
-	public void setArea(String area) {
-		this.area = area;
-	}
-
-	/**
-	 * @return the priority
-	 */
-	public int getPriority() {
-		return priority;
-	}
-
-	/**
-	 * @param priority the priority to set
-	 */
-	public void setPriority(int priority) {
-		this.priority = priority;
-	}
-
-	/**
 	 * @return the grade
 	 */
-	public int getGrade() {
+	public Integer getGrade() {
 		return grade;
 	}
 
 	/**
 	 * @param grade the grade to set
 	 */
-	public void setGrade(int grade) {
+	public void setGrade(Integer grade) {
 		this.grade = grade;
 	}
 
@@ -140,11 +112,10 @@ public class Matrix {
 	public void setTopic(Topic topic) {
 		this.topic = topic;
 	}
-	
 
 	@Override
 	public int hashCode() {
-		return (int) getId();
+		return (Integer) getId();
 	}
 
 	@Override
@@ -157,5 +128,4 @@ public class Matrix {
 
 		return false;
 	}
-
 }

@@ -29,7 +29,7 @@ public class MatrixDAOImpl extends GenericDAO<Matrix> implements MatrixDAO {
 	}
 
 	@Override
-	public List<Matrix> findMatrixsByUserAndTopic(User user, Topic topic) {
+	public List<Matrix> findMatricesByUserAndTopic(User user, Topic topic) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("user", user);
 		parameters.put("topic", topic);
@@ -37,7 +37,7 @@ public class MatrixDAOImpl extends GenericDAO<Matrix> implements MatrixDAO {
 	}
 
 	@Override
-	public List<Matrix> findMatrixsByTopic(Topic topic) {
+	public List<Matrix> findMatricesByTopic(Topic topic) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("topic", topic);
 		return super.findByEntity(Matrix.FIND_BY_TOPIC, parameters);
